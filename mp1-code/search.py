@@ -34,7 +34,6 @@ def path_to_list(path):
     for s in list:
         if(s == ""):
             continue
-        print(s)
         s = s.replace('(', '')
         s = s.replace(')', '')
         s = s.strip()
@@ -61,7 +60,6 @@ def bfs(maze):
         path, curr = queue.popleft()
         i += 1
         if curr == maze.getObjectives()[0]:
-            print(path)
             return path_to_list(path), i
         if curr in visited:
             continue
