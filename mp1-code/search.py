@@ -103,7 +103,7 @@ def greedy(maze):
     start = maze.getStart()
     end = maze.getObjectives()[0]
     hep = []
-    heappush(hep, (heuristicGreedy(start, end), start, ""+pt_to_string(start)+"/"))
+    heappush(hep, (heuristic(start, end), start, ""+pt_to_string(start)+"/"))
     visited = set()
     i = 0
     while hep:
@@ -116,7 +116,7 @@ def greedy(maze):
 
         visited.add(currNode)
         for node in maze.getNeighbors(currNode[0], currNode[1]):
-            heappush(hep, (heuristicGreedy(node, end), node, path + pt_to_string(node)+"/"))
+            heappush(hep, (heuristic(node, end), node, path + pt_to_string(node)+"/"))
 
     return [], 0
 
