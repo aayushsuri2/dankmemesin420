@@ -22,6 +22,9 @@ files and classes when code is run, so be careful to not modify anything else.
 from collections import deque
 from heapq import heappop, heappush
 
+
+
+#Manhattan Distance
 def heuristic(curr, nxt):
     return abs(curr[0] - nxt[0]) + abs(curr[1] - nxt[1])
 
@@ -87,10 +90,64 @@ def dfs(maze):
             stack.append((path + pt_to_string(adj)+"/", adj))
     return [], i
 
+
+#Euclidean Distance
+def heuristicGreedy(currNode, endNode):
+    return (((currNode[0] - endNode[0])**2) + ((currNode[1] - endNode[1])**2))**(1/2)
+
+
 def greedy(maze):
     # TODO: Write your code here
     # return path, num_states_explored
+
+    start = maze.getStart()
+    end = maze.getObjectives()[0]
+    hep = []
+    heappush(hep, (heuristicGreedy(start, end), start, ""+pt_to_string(start)+"/"))
+    visited = set()
+    i = 0
+    while hep:
+        cost, currNode, path = heappop(hep)
+        i += 1
+        if currNode == maze.getObjectives()[0]:
+            return path_to_list(path), i
+        if currNode in visited:
+            continue
+
+        visited.add(currNode)
+        for node in maze.getNeighbors(currNode[0], currNode[1]):
+            heappush(hep, (heuristicGreedy(node, end), node, path + pt_to_string(node)+"/"))
+
     return [], 0
+
+
+    # currNode = maze.getStart()
+    # path = []
+    # visited = set()
+    # i = 0
+    # endNode = maze.getObjectives()[0]
+    # while currNode != endNode:
+
+    #     n_list = maze.getNeighbors(currNode[0], currNode[1])
+
+    #     euclidean_dist = []
+    #     for i in n_list:
+
+    #         if i not in visited:
+    #             h_sld = ((i[0] - endNode[0])**2 + (i[1]-endNode[1])**2)**(1/2)
+    #             euclidean_dist.append(h_sld)
+
+    #     print(euclidean_dist)
+    #     min_index = euclidean_dist.index(min(euclidean_dist))
+
+    #     visited.add(currNode)
+    #     path.append(currNode)
+
+    #     currNode = n_list[min_index]
+
+    # print(path)
+
+    # return path, len(path)
 
 def astar(maze):
     # TODO: Write your code here
