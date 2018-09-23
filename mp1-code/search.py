@@ -154,12 +154,12 @@ def astar(maze):
     # return path, num_states_explored
     start = maze.getStart()
     hep = []
-    heappush(hep, (0 + heuristic(start, maze.getObjectives()[0]), 0, "", start))
+    heappush(hep, (0 + heuristic(start, maze.getObjectives()[0]), 0, pt_to_string(start)+"/", start))
     visited = set()
     while hep:
         _, cost, path, curr = heappop(hep)
         if curr == maze.getObjectives()[0]:
-            return path
+            return path_to_list(path), len(visited)
         if curr in visited:
             continue
         visited.add(curr)
